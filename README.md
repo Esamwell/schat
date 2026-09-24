@@ -50,6 +50,16 @@ O script é interativo. Ele vai perguntar quais são os seus domínios e o seu e
 
 **Ao final do script, você já poderá acessar `https://painel.seudominio.com` e usar o SChat imediatamente!**
 
+### Instalação em Computador Local (Desenvolvimento)
+Se você for um desenvolvedor e quiser rodar o SChat na sua própria máquina (Localhost/WSL), não precisa de Nginx ou Certbot. Para isso, criamos um script simplificado:
+```bash
+git clone https://github.com/Esamwell/schat.git izing
+cd izing
+chmod +x install_local.sh
+./install_local.sh
+```
+O script fará a instalação e no final instruirá como iniciar os servidores de desenvolvimento.
+
 ---
 
 ## 💻 Manual do Usuário
