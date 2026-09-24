@@ -35,7 +35,7 @@ export default {
           }
         };
       });
-      return queue.bull.addBulk(parsedJobs);
+      return queue.bull.addBulk(parsedJobs).then((res: any) => { console.log("ADD BULK SUCCESS", res.length); return res; }).catch((err: any) => { console.error("ADD BULK ERROR", err); throw err; });
     }
     return queue.bull.add(data, { ...queue.options, ...data.options });
   },
