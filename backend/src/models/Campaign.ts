@@ -105,8 +105,7 @@ class Campaign extends Model<Campaign> {
           const lidas = +instance.dataValues.lidas;
           const contactsCount = +instance.dataValues.contactsCount;
 
-          const totalTransacionado =
-            pendentesEntrega + pendentesEnvio + recebidas + lidas;
+          const totalTransacionado = pendentesEntrega + recebidas + lidas;
 
           if (
             instance.status === "scheduled" &&
