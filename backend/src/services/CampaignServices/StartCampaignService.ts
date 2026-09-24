@@ -115,6 +115,7 @@ const calcDelay = (nextDate: Date, delay: number) => {
   // se a diferença for negativa, a hora em que a tarefa está sendo
   // programada é menor que a
   // if (diffSeconds < 0)
+  if (diffSeconds < 0) return delay;
   return diffSeconds * 1000 + delay;
 };
 

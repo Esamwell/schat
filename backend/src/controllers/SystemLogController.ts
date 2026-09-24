@@ -3,7 +3,7 @@ import { exec } from "child_process";
 import path from "path";
 import fs from "fs";
 
-export const getSystemLogs = async (req: Request, res: Response): Promise<Response> => {
+export const getSystemLogs = async (req: Request, res: Response): Promise<any> => {
   const logFile = path.join(__dirname, "..", "..", "logs", "app.logg");
   
   if (!fs.existsSync(logFile)) {
@@ -37,7 +37,7 @@ export const getSystemLogs = async (req: Request, res: Response): Promise<Respon
   });
 };
 
-export const clearSystemLogs = async (req: Request, res: Response): Promise<Response> => {
+export const clearSystemLogs = async (req: Request, res: Response): Promise<any> => {
   const logFile = path.join(__dirname, "..", "..", "logs", "app.logg");
   
   if (fs.existsSync(logFile)) {
