@@ -188,7 +188,7 @@ const isRetriesLimit = async (
     };
     const logsRetry: any = {
       ticketId: ticket.id,
-      type: destinyType === 1 ? "retriesLimitQueue" : "retriesLimitUserDefine"
+      type: destinyType === 1 ? "retriesLimitQueue" : (destinyType === 3 ? "autoClose" : "retriesLimitUserDefine")
     };
 
     // enviar para fila
@@ -201,8 +201,14 @@ const isRetriesLimit = async (
       updatedValues.userId = destiny;
       logsRetry.userId = destiny;
     }
+    // encerrar atendimento
+    if (destinyType === 3) {
+      updatedValues.status = "closed";
+      updatedValues.unreadMessages = 0;
+      updatedValues.answered = false;
+    }
 
-    ticket.update(updatedValues);
+    await ticket.update(updatedValues);
     socketEmit({
       tenantId: ticket.tenantId,
       type: "ticket:update",
@@ -211,7 +217,9 @@ const isRetriesLimit = async (
     await CreateLogTicketService(logsRetry);
 
     // enviar mensagem de boas vindas à fila ou usuário
-    await sendWelcomeMessage(ticket, flowConfig);
+    if (destinyType === 1 || destinyType === 2) {
+      await sendWelcomeMessage(ticket, flowConfig);
+    }
     return true;
   }
   return false;
