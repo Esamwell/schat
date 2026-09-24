@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import { QueryTypes } from "sequelize";
 
+import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import socketEmit from "../../helpers/socketEmit";
 import ListSettingsService from "../SettingServices/ListSettingsService";
@@ -57,9 +58,11 @@ const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
         await ticket.update({ botInactiveWarningSentAt: new Date() });
       } else {
         const sentAt = new Date(ticket.botInactiveWarningSentAt).getTime();
-        const lastMsgAt = ticket.lastMessageAt ? Number(ticket.lastMessageAt) : 0;
+        const lastMessage = await Message.findOne({ where: { ticketId: ticket.id }, order: [["createdAt", "DESC"]] });
+        const lastUserMessage = await Message.findOne({ where: { ticketId: ticket.id, fromMe: false }, order: [["createdAt", "DESC"]] });
+        const lastUserMsgAt = lastUserMessage ? lastUserMessage.createdAt.getTime() : 0;
 
-        if (lastMsgAt > sentAt) {
+        if (lastUserMsgAt > sentAt) {
           await ticket.update({ botInactiveWarningSentAt: null });
           return;
         }
