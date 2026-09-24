@@ -14,10 +14,11 @@ const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
     t."botInactiveWarningSentAt",
     config->'configurations'->'notResponseMessage'->'type' as type_action,
     config->'configurations'->'notResponseMessage'->'destiny' as destiny,
-    (t."lastInteractionBot" < CURRENT_TIMESTAMP - concat(config->'configurations'->'notResponseMessage'->'time', ' MINUTES')::interval) as is_inactive
+    (t."lastInteractionBot" < CURRENT_TIMESTAMP - concat(COALESCE(NULLIF(config->'configurations'->'notResponseMessage'->>'time', ''), s2.value, '5'), ' MINUTES')::interval) as is_inactive
     from "Tickets" t
     inner join "ChatFlow" cf on t."tenantId" = cf."tenantId" and cf.id = t."chatFlowId"
     inner join "Settings" s on s."tenantId" = cf."tenantId" and s."key" = 'botTicketActive'
+    left join "Settings" s2 on s2."tenantId" = cf."tenantId" and s2."key" = 'botInactiveWarningTime'
     cross join lateral json_array_elements(cf.flow->'nodeList') as config
     where t."chatFlowId"::text = s.value
     and t.status = 'pending'

@@ -87,7 +87,7 @@ const isCloseTicketAction = async (
   ticket: Ticket,
   stepCondition: any
 ): Promise<void> => {
-  if (stepCondition.action === 3) {
+  if (stepCondition.action == 3) {
     await ticket.update({
       chatFlowId: null,
       stepChatFlow: null,
