@@ -50,7 +50,7 @@ const isQueueDefine = async (
 ): Promise<void> => {
   // action = 1: enviar para fila: queue
   if (stepCondition.action === 1) {
-    ticket.update({
+    await ticket.update({
       queueId: stepCondition.queueId,
       chatFlowId: null,
       stepChatFlow: null,
@@ -71,7 +71,7 @@ const isQueueDefine = async (
         ticket.tenantId,
         flowConfig?.configurations?.autoDistributeTickets
       );
-      ticket.reload();
+    await ticket.reload();
     }
 
     socketEmit({
@@ -119,7 +119,7 @@ const isUserDefine = async (
 ): Promise<void> => {
   // action = 2: enviar para determinado usuário
   if (stepCondition.action === 2) {
-    ticket.update({
+    await ticket.update({
       userId: stepCondition.userIdDestination,
       // status: "pending",
       chatFlowId: null,
@@ -128,7 +128,7 @@ const isUserDefine = async (
       lastInteractionBot: new Date()
     });
 
-    ticket.reload();
+    await ticket.reload();
 
     socketEmit({
       tenantId: ticket.tenantId,
