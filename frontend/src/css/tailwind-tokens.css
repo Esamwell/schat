@@ -1,0 +1,84 @@
+/* Design tokens: official OSNI 13013 campaign identity
+   (vermelho-barro vivo / laranja-terra / azul-açude / amarelo-sol / verde-caatinga / areia / uva).
+   Used by Tailwind utilities (tw-bg-primary, tw-text-foreground, etc). */
+
+:root {
+  --izing-background: 0 0% 100%;
+  --izing-foreground: 222 47% 11%;
+
+  --izing-card: 0 0% 100%;
+  --izing-card-foreground: 222 47% 11%;
+
+  --izing-popover: 0 0% 100%;
+  --izing-popover-foreground: 222 47% 11%;
+
+  /* vermelho-barro vivo #E10628 */
+  --izing-primary: 351 95% 45%;
+  --izing-primary-foreground: 0 0% 100%;
+
+  /* laranja-terra #F08000 */
+  --izing-secondary: 32 100% 47%;
+  --izing-secondary-foreground: 0 0% 100%;
+
+  /* amarelo-sol #E0AE2B */
+  --izing-accent: 43 74% 52%;
+  --izing-accent-foreground: 0 0% 11%;
+
+  /* areia #F4EBDD (tinted toward the campaign's warm neutral) */
+  --izing-muted: 37 45% 95%;
+  --izing-muted-foreground: 25 8% 42%;
+
+  --izing-destructive: 0 72% 51%;
+  --izing-destructive-foreground: 0 0% 100%;
+
+  --izing-border: 37 20% 88%;
+  --izing-input: 37 20% 88%;
+  --izing-ring: 351 95% 45%;
+
+  --izing-radius: 0.75rem;
+}
+
+.tw-dark {
+  --izing-background: 0 0% 4%;
+  --izing-foreground: 0 0% 98%;
+
+  --izing-card: 0 0% 7%;
+  --izing-card-foreground: 0 0% 98%;
+
+  --izing-popover: 0 0% 7%;
+  --izing-popover-foreground: 0 0% 98%;
+
+  --izing-primary: 351 85% 55%;
+  --izing-primary-foreground: 0 0% 100%;
+
+  --izing-secondary: 32 90% 50%;
+  --izing-secondary-foreground: 0 0% 100%;
+
+  --izing-accent: 43 70% 55%;
+  --izing-accent-foreground: 0 0% 11%;
+
+  --izing-muted: 0 0% 12%;
+  --izing-muted-foreground: 0 0% 65%;
+
+  --izing-destructive: 0 63% 41%;
+  --izing-destructive-foreground: 0 0% 100%;
+
+  --izing-border: 0 0% 16%;
+  --izing-input: 0 0% 16%;
+  --izing-ring: 351 85% 55%;
+}
+
+/* Opacity-tint helpers (the installed Tailwind version predates the
+   bg-primary/10 slash-opacity syntax, so these are hand-written using
+   the same HSL tokens). */
+.tw-bg-primary-10 {
+  background-color: hsl(var(--izing-primary) / 0.1);
+}
+
+.tw-bg-primary-20 {
+  background-color: hsl(var(--izing-primary) / 0.2);
+}
+
+.tw-bg-slate-50-60 {
+  background-color: hsl(210 40% 98% / 0.6);
+}

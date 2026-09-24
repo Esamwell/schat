@@ -1,0 +1,187 @@
+// Quasar Sass (& SCSS) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+// Official OSNI 13013 campaign identity:
+// vermelho-barro vivo #E10628 / laranja-terra #F08000 / azul-açude #24566F /
+// amarelo-sol #E0AE2B / verde-caatinga #66713A / areia #F4EBDD / uva #A43C8D
+
+$neutral: #E0E1E2
+$primary: #E10628 // vermelho-barro vivo
+$secondary: #F7EFE6 // areia (light neutral, tinted warm)
+$accent: #F08000 // laranja-terra
+$light: #FF6584 // lighter red tint, used for dark-mode text contrast
+
+$dark: #121212 // true neutral black
+$faded: #64748B // slate-500
+
+$positive: #16A34A
+$negative: #DC2626
+$info: #24566F // azul-açude
+$warning: #E0AE2B // amarelo-sol
+
+//  SPACING
+
+$spacer: 2.2rem
+$spacer-sm: ($spacer / 2)
+$spacer-lg: ($spacer * 2)
+
+//  COLORS
+$success: #16A34A
+$danger: #DC2626
+$warning: #E0AE2B
+$dark: #121212
+$grey: #94A3B8
+$grey-light: #E2E8F0
+$white: #fff
+$black: #0F172A
+
+$chat-fromMe: #FEF1F2 // light red tint for outgoing bubbles
+$chat-toMe: #E10628
+$drawer-chat: #FEF1F2
+$active-item-ticket: #FEF1F2
+$message-replyed: #E2E8F0BF
+
+$uva: #A43C8D // extra brand accent, used sparingly
+
+// Border radius used across cards/menus/lists (see app.sass)
+$generic-border-radius: 16px
+
+// $chat-toMe:
+
+//  TYPOGRAPHY
+
+$font-family-sans-serif: 'Nunito', sans-serif !default
+$font-family-serif: 'Nunito', sans-serif !default
+
+// ** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: 'Nunito', sans-serif !default
+$font-family-base: $font-family-sans-serif !default
+
+$font-size-base: 14px !default
+$font-size-large: ceil(($font-size-base * 1.25)) !default
+$font-size-small: ceil(($font-size-base * 0.85)) !default
+
+$h1-font-size: $font-size-base * 2
+$h2-font-size: $font-size-base * 1.74
+$h3-font-size: $font-size-base * 1.51
+$h4-font-size: $font-size-base * 1.32
+$h5-font-size: $font-size-base * 1.14
+$h6-font-size: $font-size-base
+
+$line-height-base: 1.625rem !default
+
+$headings-font-family: inherit !default
+$headings-font-weight: 500 !default
+$headings-line-height: 1.2 !default
+$headings-color: #1E293B
+$headings-margin-bottom: ($spacer / 2) !default
+
+$font-weight-light: 300
+$font-weight-normal: 400
+$font-weight-bold: 700
+
+$font-weight-base: $font-weight-normal
+$line-height-base: 1.45
+
+$content-color: #334155
+$theme-background: #F7F8FA
+
+//  TYPOGRAPHY
+
+$reduced-sidebar-width: 80px
+
+//  DARK THEME
+
+$sidebar-dark-bg: #0A0A0A
+$content-dark-bg: #121212
+$dark-card-color: #0A0A0A
+$table-dark-stripe: #171717
+$table-light-stripe: #121212
+$grid-dark-color: #262626
+
+$theme-light-dark-bg: #121212
+$theme-dark-bg: #0A0A0A
+$theme-dark-secondary-bg: #141414
+$theme-dark-text-color: #C7C7C7
+$theme-dark-heading-color: #F5F5F5
+$theme-dark-border-color: #262626
+$theme-dark-shadow-color: #000000
+
+/// Ajustes para dark mode
+body.body--dark
+  background: #0A0A0A
+  border-color: none !important
+  color: $grey
+
+  .bg-white
+    background: #171717 !important
+    color: $grey !important
+  .bg-blue-1
+    background: rgba(7, 7, 7, 0.198) !important
+  .text-grey-8
+    color: $grey !important
+  .text-grey-9
+    color: #424242 !important
+
+  .bg-grey-3
+    background: #424242 !important
+    // color: $neutral !important
+  .bg-padrao
+    background: rgba(7, 7, 7, 0.609) !important
+
+  .bg-blue-grey-1
+    background: none !important
+
+  .ticket-active-item
+    background: rgba(7, 7, 7, 0.849) !important
+
+  #item-ticket-houve:hover
+    background: rgba(7, 7, 7, 0.849) !important
+
+  div.q-badge.bg-secondary
+    background: rgba(7, 7, 7, 0.198) !important
+
+  div.q-badge.text-grey-10
+    color: $neutral !important
+
+  hr.bg-grey-2
+    background: rgba(7, 7, 7, 0.198) !important
+
+  hr.q-separator--dark
+    background: rgba(7, 7, 7, 0.801) !important
+    border-color: rgba(7, 7, 7, 0.801) !important
+
+  aside div.bg-grey-1
+    background: rgba(7, 7, 7, 0.322) !important
+
+  .text-primary
+    color: $light !important
+
+  .bg-primary
+    background: rgba(7, 7, 7, 0.959) !important
+
+  label div.bg-grey-2
+    background: rgba(7, 7, 7, 0.801) !important
+
+  div .bg-amber .q-carousel--dark
+    color: rgba(7, 7, 7, 0.801) !important
+
+  div.q-fab > div.q-fab__actions
+    background: rgba(0, 0, 0, 0.897) !important
+
+  .q-table__top, table.q-table thead tr th, .q-table__bottom
+    background: #1E1E1E !important
+
+body.body--dark .q-header, body.body--dark .q-footer, body.body--dark .q-drawer
+  border-color: rgba(7, 7, 7, 0.801) !important
