@@ -115,7 +115,7 @@ const calcDelay = (nextDate: Date, delay: number) => {
   // se a diferença for negativa, a hora em que a tarefa está sendo
   // programada é menor que a
   // if (diffSeconds < 0)
-  if (diffSeconds < 0) return delay;
+  if (diffSeconds < 0) return 0;
   return diffSeconds * 1000 + delay;
 };
 
@@ -156,6 +156,9 @@ const StartCampaignService = async ({
   //   today.getHours()
   // );
   let dateDelay = zonedTimeToUtc(campaign.start, "America/Sao_Paulo");
+  if (dateDelay.getTime() < new Date().getTime()) {
+    dateDelay = new Date();
+  }
   const data = campaignContacts.map((campaignContact: CampaignContacts) => {
     dateDelay = addSeconds(dateDelay, timeDelay / 1000);
     return mountMessageData(campaign, campaignContact, {
