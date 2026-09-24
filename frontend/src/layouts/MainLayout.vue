@@ -328,6 +328,12 @@ const objMenuAdmin = [
     routeName: 'relatorios'
   },
   {
+    title: 'Logs do Sistema',
+    caption: 'Logs de execução',
+    icon: 'mdi-console-line',
+    routeName: 'logs'
+  },
+  {
     title: 'Usuarios',
     caption: 'Admin de usuários',
     icon: 'mdi-account-group',
