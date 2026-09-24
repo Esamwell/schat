@@ -1,6 +1,6 @@
 # SChat - Plataforma Multi-Atendimento Inteligente 🚀
 
-O **SChat** é um sistema completo de gestão de atendimentos para WhatsApp, Instagram e Telegram. Projetado com base no Izing/Whaticket, esta versão contém melhorias substanciais como encerramento automático por inatividade no Chatbot e configurações otimizadas.
+O **SChat** é um sistema completo e independente de gestão de atendimentos para WhatsApp, Instagram e Telegram. Desenvolvido para oferecer estabilidade e performance, possui melhorias exclusivas como o encerramento automático por inatividade no Chatbot e painel de configurações otimizado.
 
 ## 🌟 Principais Funcionalidades
 
