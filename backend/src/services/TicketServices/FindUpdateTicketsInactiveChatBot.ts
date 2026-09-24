@@ -57,16 +57,15 @@ const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
 
         await ticket.update({ botInactiveWarningSentAt: new Date() });
       } else {
-        const sentAt = new Date(ticket.botInactiveWarningSentAt).getTime();
         const lastMessage = await Message.findOne({ where: { ticketId: ticket.id }, order: [["createdAt", "DESC"]] });
-        const lastUserMessage = await Message.findOne({ where: { ticketId: ticket.id, fromMe: false }, order: [["createdAt", "DESC"]] });
-        const lastUserMsgAt = lastUserMessage ? lastUserMessage.createdAt.getTime() : 0;
 
-        if (lastUserMsgAt > sentAt) {
+        // Se a última mensagem for do usuário, significa que ele respondeu ao aviso
+        if (lastMessage && lastMessage.fromMe === false) {
           await ticket.update({ botInactiveWarningSentAt: null });
           return;
         }
 
+        const sentAt = new Date(ticket.botInactiveWarningSentAt).getTime();
         const now = new Date().getTime();
         const diffMinutes = Math.floor((now - sentAt) / (1000 * 60));
 
