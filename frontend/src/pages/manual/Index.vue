@@ -239,8 +239,8 @@ export default {
           notas: [
             'O bot para de responder automaticamente assim que um atendente humano assume o ticket — e o humano pode intervir a qualquer momento.',
             'Quando o cliente encerra pelo bot (ação <b>Encerrar</b>), se ele mandar uma nova mensagem o bot reinicia do zero automaticamente, sem precisar de intervenção humana.',
-            '<b>Encerramento por inatividade:</b> se o cliente parar de responder pelo tempo inicial definido no fluxo, ele recebe uma mensagem de aviso. Se não responder após os minutos definidos, o ticket é fechado.',
-            'Você configura o tempo limite após o aviso e os textos (do aviso e do encerramento final) no menu geral de <b>Configurações</b> > Inatividade do Chatbot.',
+            '<b>Encerramento por inatividade:</b> se o cliente parar de responder pelo tempo definido nas <b>Configurações</b> Gerais (Inatividade do Chatbot), o sistema envia uma mensagem de aviso. Se ele não responder no mesmo intervalo de tempo, o ticket é encerrado automaticamente.',
+            'Dica: Se quiser um tempo diferente específico para uma etapa do bot, preencha o campo "Tempo (minutos)" da seção "Ausência de resposta" dentro da configuração da etapa.',
             'Use "Duplicar Fluxo" na listagem pra criar uma variação de um fluxo já pronto sem montar do zero.'
           ]
         },
