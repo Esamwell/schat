@@ -6,6 +6,7 @@ import Ticket from "../../models/Ticket";
 import socketEmit from "../../helpers/socketEmit";
 import ListSettingsService from "../SettingServices/ListSettingsService";
 import CreateMessageSystemService from "../MessageServices/CreateMessageSystemService";
+import { logger } from "../../utils/logger";
 
 const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
   const query = `
@@ -47,19 +48,22 @@ const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
       if (!ticket.botInactiveWarningSentAt) {
         if (!item.is_inactive) return; 
         
-        await CreateMessageSystemService({
-          msg: { body: warningMessage, fromMe: true, read: true },
-          tenantId: ticket.tenantId,
-          ticket,
-          sendType: "bot",
-          status: "pending"
-        });
+        try {
+          await CreateMessageSystemService({
+            msg: { body: warningMessage, fromMe: true, read: true },
+            tenantId: ticket.tenantId,
+            ticket,
+            sendType: "bot",
+            status: "pending"
+          });
+        } catch (e) {
+          logger.error("FindUpdateTicketsInactiveChatBot > CreateMessageSystemService (warning)", e);
+        }
 
         await ticket.update({ botInactiveWarningSentAt: new Date() });
       } else {
         const lastMessage = await Message.findOne({ where: { ticketId: ticket.id }, order: [["createdAt", "DESC"]] });
 
-        // Se a última mensagem for do usuário, significa que ele respondeu ao aviso
         if (lastMessage && lastMessage.fromMe === false) {
           await ticket.update({ botInactiveWarningSentAt: null });
           return;
@@ -70,13 +74,17 @@ const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
         const diffMinutes = Math.floor((now - sentAt) / (1000 * 60));
 
         if (diffMinutes >= closeTime) {
-          await CreateMessageSystemService({
-            msg: { body: closeMessage, fromMe: true, read: true },
-            tenantId: ticket.tenantId,
-            ticket,
-            sendType: "bot",
-            status: "pending"
-          });
+          try {
+            await CreateMessageSystemService({
+              msg: { body: closeMessage, fromMe: true, read: true },
+              tenantId: ticket.tenantId,
+              ticket,
+              sendType: "bot",
+              status: "pending"
+            });
+          } catch (e) {
+            logger.error("FindUpdateTicketsInactiveChatBot > CreateMessageSystemService (close)", e);
+          }
 
           await ticket.update({
             status: "closed",
@@ -94,7 +102,9 @@ const FindUpdateTicketsInactiveChatBot = async (): Promise<void> => {
         }
       }
     })
-  );
+  ).catch(e => {
+    logger.error("FindUpdateTicketsInactiveChatBot > Promise.all", e);
+  });
 };
 
 export default FindUpdateTicketsInactiveChatBot;

@@ -7,7 +7,7 @@
         <q-btn icon="delete" color="negative" label="Limpar Logs" @click="clearLogs" />
       </div>
     </div>
-    
+
     <q-card class="bg-dark text-white" style="height: 70vh; overflow: hidden; border-radius: 8px;">
       <q-scroll-area style="height: 100%; width: 100%;">
         <div class="q-pa-md" style="font-family: monospace; white-space: pre-wrap; font-size: 13px;">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { request } from 'src/service/custom-axios'
+import request from 'src/service/request'
 
 export default {
   name: 'SystemLogs',

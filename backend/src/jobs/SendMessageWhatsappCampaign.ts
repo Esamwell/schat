@@ -9,30 +9,55 @@ export default {
   key: "SendMessageWhatsappCampaign",
   options: {
     delay: 15000,
-    attempts: 10,
+    attempts: 3,
     removeOnComplete: true,
     // removeOnFail: true,
     backoff: {
       type: "fixed",
-      delay: 60000 * 5 // 5 min
+      delay: 60000 * 2 // 2 min
     }
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async handle({ data }: any) {
     try {
-      /// feito por está apresentando problema com o tipo
       const wbot = getWbot(data.whatsappId);
       let message = {} as WbotMessage;
+
+      let targetId = `${data.number}@c.us`;
+      try {
+        const idNumber = await wbot.getNumberId(data.number);
+        if (idNumber && idNumber._serialized) {
+          targetId = idNumber._serialized;
+        } else {
+          logger.warn(
+            `SendMessageWhatsappCampaign | Contato não possui WhatsApp válido: ${data.number}`
+          );
+          await CampaignContacts.update(
+            {
+              body: "Número inválido ou sem WhatsApp",
+              jobId: data.jobId,
+              ack: -1
+            },
+            { where: { id: data.campaignContact.id } }
+          );
+          return null;
+        }
+      } catch (checkErr) {
+        logger.warn(
+          `SendMessageWhatsappCampaign | Falha ao consultar getNumberId para ${data.number}: ${checkErr}`
+        );
+      }
+
       if (data.mediaUrl) {
         const customPath = join(__dirname, "..", "..", "public");
         const mediaPath = join(customPath, data.mediaName);
         const newMedia = MessageMedia.fromFilePath(mediaPath);
-        message = await wbot.sendMessage(`${data.number}@c.us`, newMedia, {
+        message = await wbot.sendMessage(targetId, newMedia, {
           sendAudioAsVoice: true,
           caption: data.message
         });
       } else {
-        message = await wbot.sendMessage(`${data.number}@c.us`, data.message, {
+        message = await wbot.sendMessage(targetId, data.message, {
           linkPreview: false
         });
       }
@@ -44,7 +69,8 @@ export default {
           body: data.message,
           mediaName: data.mediaName,
           timestamp: message.timestamp,
-          jobId: data.jobId
+          jobId: data.jobId,
+          ack: message.ack || 1
         },
         { where: { id: data.campaignContact.id } }
       );

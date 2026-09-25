@@ -22,6 +22,7 @@ const routes = [
       { path: '/horario-atendimento', name: 'horarioAtendimento', component: () => import('pages/horarioAtendimento/Index.vue') },
       { path: '/api-service', name: 'api-service', component: () => import('pages/api/Index.vue') },
       { path: '/manual', name: 'manual', component: () => import('pages/manual/Index.vue') },
+      { path: '/logs', name: 'logs', component: () => import('pages/logs/Index.vue') },
       {
         path: '/chat-flow',
         component: () => import('pages/chatFlow/Index.vue'),

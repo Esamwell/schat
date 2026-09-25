@@ -163,7 +163,7 @@ const StartCampaignService = async ({
     dateDelay = addSeconds(dateDelay, timeDelay / 1000);
     return mountMessageData(campaign, campaignContact, {
       ...options,
-      jobId: `campaginId_${campaign.id}_contact_${campaignContact.contactId}_id_${campaignContact.id}`,
+      jobId: `campaginId_${campaign.id}_contact_${campaignContact.contactId}_id_${campaignContact.id}_time_${new Date().getTime()}`,
       delay: calcDelay(dateDelay, timeDelay)
     });
   });
