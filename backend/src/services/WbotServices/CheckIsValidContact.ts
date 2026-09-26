@@ -2,7 +2,6 @@ import AppError from "../../errors/AppError";
 import GetDefaultWhatsApp from "../../helpers/GetDefaultWhatsApp";
 import { getWbot } from "../../libs/wbot";
 import { logger } from "../../utils/logger";
-// import { StartWhatsAppSessionVerify } from "./StartWhatsAppSessionVerify";
 
 const CheckIsValidContact = async (
   number: string,
@@ -13,15 +12,24 @@ const CheckIsValidContact = async (
   const wbot = getWbot(defaultWhatsapp.id);
 
   try {
-    // const isValidNumber = await wbot.isRegisteredUser(`${number}@c.us`);
-    const idNumber = await wbot.getNumberId(number);
+    const cleanNumber = number.replace(/\D/g, "");
+    const idNumber = await wbot.getNumberId(cleanNumber);
     if (!idNumber) {
       throw new AppError("invalidNumber", 400);
+    }
+    // Se o WhatsApp Web retornar um LID (@lid em vez de @c.us),
+    // mantemos o número de telefone real digitado para não salvar o LID interno
+    if (idNumber.server === "lid") {
+      return {
+        ...idNumber,
+        user: cleanNumber,
+        server: "c.us",
+        _serialized: `${cleanNumber}@c.us`
+      };
     }
     return idNumber;
   } catch (err: any) {
     logger.error(`CheckIsValidContact | Error: ${err}`);
-    // StartWhatsAppSessionVerify(defaultWhatsapp.id, err);
     if (err.message === "invalidNumber") {
       throw new AppError("ERR_WAPP_INVALID_CONTACT");
     }

@@ -8,6 +8,7 @@ import DeleteCampaignService from "../services/CampaignServices/DeleteCampaignSe
 import UpdateCampaignService from "../services/CampaignServices/UpdateCampaignService";
 import StartCampaignService from "../services/CampaignServices/StartCampaignService";
 import CancelCampaignService from "../services/CampaignServices/CancelCampaignService";
+import ReportCampaignService from "../services/CampaignServices/ReportCampaignService";
 
 interface CampaignData {
   name: string;
@@ -166,3 +167,19 @@ export const cancelCampaign = async (
 
   return res.status(200).json({ message: "Campaign canceled" });
 };
+
+export const report = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const { tenantId } = req.user;
+  const { campaignId } = req.params;
+
+  const data = await ReportCampaignService({
+    campaignId,
+    tenantId
+  });
+
+  return res.status(200).json(data);
+};
+

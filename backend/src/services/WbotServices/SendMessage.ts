@@ -3,6 +3,7 @@ import { MessageMedia } from "whatsapp-web.js";
 import Message from "../../models/Message";
 import { logger } from "../../utils/logger";
 import { getWbot } from "../../libs/wbot";
+import ResolveWbotChatId from "../../helpers/ResolveWbotChatId";
 
 const SendMessage = async (message: Message): Promise<void> => {
   logger.info(`SendMessage: ${message.id}`);
@@ -12,11 +13,14 @@ const SendMessage = async (message: Message): Promise<void> => {
   let quotedMsgSerializedId: string | undefined;
   const { ticket } = message;
   const contactNumber = message.contact.number;
-  const typeGroup = ticket?.isGroup ? "g" : "c";
-  const chatId = `${contactNumber}@${typeGroup}.us`;
+  const chatId = await ResolveWbotChatId(
+    wbot,
+    contactNumber,
+    ticket?.isGroup
+  );
 
   if (message.quotedMsg) {
-    quotedMsgSerializedId = `${message.quotedMsg.fromMe}_${contactNumber}@${typeGroup}.us_${message.quotedMsg.messageId}`;
+    quotedMsgSerializedId = `${message.quotedMsg.fromMe}_${chatId}_${message.quotedMsg.messageId}`;
   }
 
   if (message.mediaType !== "chat" && message.mediaName) {

@@ -56,7 +56,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { tenantId } = req.user;
   const newContact: ContactData = req.body;
-  newContact.number = newContact.number.replace("-", "").replace(" ", "");
+  newContact.number = newContact.number.replace(/\D/g, "");
 
   const schema = Yup.object().shape({
     name: Yup.string().required(),
@@ -75,9 +75,14 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   const profilePicUrl = await GetProfilePicUrl(newContact.number, tenantId);
 
+  const numberToSave =
+    waNumber?.server === "c.us" && waNumber?.user
+      ? waNumber.user
+      : newContact.number;
+
   const contact = await CreateContactService({
     ...newContact,
-    number: waNumber.user,
+    number: numberToSave,
     profilePicUrl,
     tenantId
   });
@@ -100,6 +105,9 @@ export const update = async (
 ): Promise<Response> => {
   const contactData: ContactData = req.body;
   const { tenantId } = req.user;
+  if (contactData.number) {
+    contactData.number = contactData.number.replace(/\D/g, "");
+  }
 
   const schema = Yup.object().shape({
     name: Yup.string(),
@@ -117,7 +125,12 @@ export const update = async (
 
   const waNumber = await CheckIsValidContact(contactData.number, tenantId);
 
-  contactData.number = waNumber.user;
+  const numberToSave =
+    waNumber?.server === "c.us" && waNumber?.user
+      ? waNumber.user
+      : contactData.number;
+
+  contactData.number = numberToSave;
 
   const { contactId } = req.params;
 
@@ -230,13 +243,6 @@ export const upload = async (req: Request, res: Response) => {
     tags,
     wallets
   );
-
-  // const io = getIO();
-
-  // io.emit(`company-${companyId}-contact`, {
-  //   action: "reload",
-  //   records: response
-  // });
 
   return res.status(200).json(response);
 };

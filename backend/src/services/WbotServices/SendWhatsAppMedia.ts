@@ -6,6 +6,8 @@ import Ticket from "../../models/Ticket";
 import UserMessagesLog from "../../models/UserMessagesLog";
 import { logger } from "../../utils/logger";
 
+import ResolveWbotChatId from "../../helpers/ResolveWbotChatId";
+
 interface Request {
   media: Express.Multer.File;
   ticket: Ticket;
@@ -22,8 +24,14 @@ const SendWhatsAppMedia = async ({
 
     const newMedia = MessageMedia.fromFilePath(media.path);
 
+    const chatId = await ResolveWbotChatId(
+      wbot,
+      ticket.contact.number,
+      ticket.isGroup
+    );
+
     const sendMessage = await wbot.sendMessage(
-      `${ticket.contact.number}@${ticket.isGroup ? "g" : "c"}.us`,
+      chatId,
       newMedia,
       { sendAudioAsVoice: true }
     );

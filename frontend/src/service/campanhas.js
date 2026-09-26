@@ -88,3 +88,10 @@ export function DeletarTodosContatosCampanha (campaignId) {
     }
   })
 }
+
+export function RelatorioCampanha (campaignId) {
+  return request({
+    url: `/campaigns/report/${campaignId}`,
+    method: 'get'
+  })
+}

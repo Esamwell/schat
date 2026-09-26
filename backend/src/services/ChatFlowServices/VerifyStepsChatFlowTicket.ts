@@ -32,6 +32,7 @@ const isNextSteps = async (
     if (!nextStep) return;
 
     for (const interaction of nextStep.interactions) {
+      await new Promise(r => setTimeout(r, 1500));
       await BuildSendMessageService({
         msg: interaction,
         tenantId: ticket.tenantId,
@@ -388,6 +389,7 @@ const VerifyStepsChatFlowTicket = async (
           });
         }
         for (const interaction of step.interactions) {
+          await new Promise(r => setTimeout(r, 1500));
           await BuildSendMessageService({
             msg: interaction,
             tenantId: ticket.tenantId,

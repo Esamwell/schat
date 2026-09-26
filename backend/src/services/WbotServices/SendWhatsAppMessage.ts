@@ -7,7 +7,8 @@ import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import UserMessagesLog from "../../models/UserMessagesLog";
 import { logger } from "../../utils/logger";
-// import { StartWhatsAppSessionVerify } from "./StartWhatsAppSessionVerify";
+
+import ResolveWbotChatId from "../../helpers/ResolveWbotChatId";
 
 interface Request {
   body: string;
@@ -30,9 +31,15 @@ const SendWhatsAppMessage = async ({
 
   const wbot = await GetTicketWbot(ticket);
 
+  const chatId = await ResolveWbotChatId(
+    wbot,
+    ticket.contact.number,
+    ticket.isGroup
+  );
+
   try {
     const sendMessage = await wbot.sendMessage(
-      `${ticket.contact.number}@${ticket.isGroup ? "g" : "c"}.us`,
+      chatId,
       body,
       {
         quotedMessageId: quotedMsgSerializedId,
@@ -58,7 +65,6 @@ const SendWhatsAppMessage = async ({
     return sendMessage;
   } catch (err) {
     logger.error(`SendWhatsAppMessage | Error: ${err}`);
-    // await StartWhatsAppSessionVerify(ticket.whatsappId, err);
     throw new AppError("ERR_SENDING_WAPP_MSG");
   }
 };

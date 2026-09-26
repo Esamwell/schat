@@ -1,5 +1,10 @@
   [
     {
+      "name": "relatorio-campanhas",
+      "titulo": "Visão Geral de Campanhas",
+      "objetivo": "Apresenta métricas de entrega, leitura, falhas, conversão de variações e status dos contatos."
+    },
+    {
       "name": "lista-contatos",
       "titulo": "Contatos",
       "objetivo": "Apresenta todos os contatos cadastratos"

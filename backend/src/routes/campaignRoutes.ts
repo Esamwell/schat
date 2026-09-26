@@ -15,6 +15,7 @@ campaignsRoutes.post(
   CampaignController.store
 );
 campaignsRoutes.get("/campaigns", isAuth, CampaignController.index);
+campaignsRoutes.get("/campaigns/report/:campaignId", isAuth, CampaignController.report);
 campaignsRoutes.put(
   "/campaigns/:campaignId",
   isAuth,

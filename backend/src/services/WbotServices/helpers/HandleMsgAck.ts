@@ -11,6 +11,7 @@ const HandleMsgAck = async (msg: WbotMessage, ack: MessageAck) => {
   await new Promise(r => setTimeout(r, 500));
 
   try {
+    logger.info(`HandleMsgAck: messageId=${msg.id?.id} ack=${ack}`);
     const messageToUpdate = await Message.findOne({
       where: { messageId: msg.id.id },
       include: [

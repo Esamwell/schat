@@ -21,8 +21,6 @@ const routes = [
       { path: '/campanhas/:campanhaId', name: 'contatos-campanha', component: () => import('pages/campanhas/ContatosCampanha.vue') },
       { path: '/horario-atendimento', name: 'horarioAtendimento', component: () => import('pages/horarioAtendimento/Index.vue') },
       { path: '/api-service', name: 'api-service', component: () => import('pages/api/Index.vue') },
-      { path: '/manual', name: 'manual', component: () => import('pages/manual/Index.vue') },
-      { path: '/logs', name: 'logs', component: () => import('pages/logs/Index.vue') },
       {
         path: '/chat-flow',
         component: () => import('pages/chatFlow/Index.vue'),
@@ -43,6 +41,11 @@ const routes = [
         path: '',
         name: 'relatorios',
         component: () => import('pages/relatorios/ccListaRelatorios')
+      },
+      {
+        path: 'relatorio-campanhas',
+        name: 'relatorio-campanhas',
+        component: () => import('pages/relatorios/RelatorioCampanhas')
       },
       {
         path: 'estatisticas-atendimentos-usuarios',

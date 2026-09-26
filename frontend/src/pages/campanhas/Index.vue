@@ -2,8 +2,10 @@
   <div>
     <q-table
       flat
+      square
       hide-bottom
       class="my-sticky-dynamic q-ma-lg"
+      title="Campanhas"
       :data="campanhas"
       :columns="columns"
       :loading="loading"
@@ -11,31 +13,24 @@
       :pagination.sync="pagination"
       :rows-per-page-options="[0]"
     >
-      <template v-slot:top>
-        <div class="row items-center justify-between full-width">
-          <div>
-            <div class="tw-text-lg tw-font-bold tw-text-foreground">Campanhas</div>
-            <div class="tw-text-sm tw-text-muted-foreground">Disparo em massa de mensagens para listas de contatos</div>
-          </div>
-          <div class="row items-center q-gutter-sm">
-            <q-btn
-              color="dark"
-              icon="refresh"
-              rounded
-              @click="listarCampanhas"
-            >
-              <q-tooltip>
-                Atualizar Listagem
-              </q-tooltip>
-            </q-btn>
-            <q-btn
-              rounded
-              color="primary"
-              label="Adicionar"
-              @click="campanhaEdicao = {}; modalCampanha = true"
-            />
-          </div>
-        </div>
+      <template v-slot:top-right>
+        <q-btn
+          class="q-mr-md"
+          color="black"
+          icon="refresh"
+          rounded
+          @click="listarCampanhas"
+        >
+          <q-tooltip>
+            Atualizar Listagem
+          </q-tooltip>
+        </q-btn>
+        <q-btn
+          rounded
+          color="primary"
+          label="Adicionar"
+          @click="campanhaEdicao = {}; modalCampanha = true"
+        />
       </template>
       <template v-slot:body-cell-color="props">
         <q-td class="text-center">
@@ -58,6 +53,17 @@
       </template>
       <template v-slot:body-cell-acoes="props">
         <q-td class="text-center">
+          <q-btn
+            flat
+            round
+            color="primary"
+            icon="mdi-chart-box-outline"
+            @click="relatorioCampanha(props.row)"
+          >
+            <q-tooltip>
+              Relatório e Métricas da Campanha
+            </q-tooltip>
+          </q-btn>
           <q-btn
             flat
             round
@@ -232,6 +238,14 @@ export default {
         params: {
           campanhaId: campanha.id,
           campanha
+        }
+      })
+    },
+    relatorioCampanha (campanha) {
+      this.$router.push({
+        name: 'relatorio-campanhas',
+        query: {
+          campaignId: campanha.id
         }
       })
     },
