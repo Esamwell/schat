@@ -11,10 +11,10 @@
       <q-drawer
         v-model="drawerTickets"
         @hide="drawerTickets = false"
-        show-if-above
+        :show-if-above="$q.screen.gt.sm"
         :overlay="$q.screen.lt.md"
         persistent
-        :breakpoint="769"
+        :breakpoint="0"
         bordered
         :width="$q.screen.lt.md ? $q.screen.width : 380"
         content-class="hide-scrollbar full-width"
@@ -129,7 +129,7 @@
                       multiple
                       options-dense
                       use-chips
-                      label="Setores"
+                      label="Filas"
                       color="primary"
                       v-model="pesquisaTickets.queuesIds"
                       :options="cUserQueues"
@@ -1114,6 +1114,9 @@ export default {
     } else {
       console.log('chat-empty')
       this.$router.push({ name: 'chat-empty' })
+      if (this.$q.screen.lt.md) {
+        this.drawerTickets = true
+      }
     }
   },
   destroyed () {

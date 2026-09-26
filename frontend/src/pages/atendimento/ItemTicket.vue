@@ -279,7 +279,8 @@ img:after
   width: inherit
   height: inherit
   z-index: 10
-  background: $secondary url('http://via.placeholder.com/300?text=PlaceHolder') no-repeat center
+  background: $secondary url('/user-profile-avatar.png') no-repeat center
+  background-size: cover
   color: transparent
 
 .ticket-active-item

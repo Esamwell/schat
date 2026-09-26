@@ -57,7 +57,6 @@
       v-if="!ticketFocado.id"
     >
       <q-icon
-        style="margin-left: 30vw"
         size="6em"
         color="grey-6"
         name="mdi-emoticon-wink-outline"
